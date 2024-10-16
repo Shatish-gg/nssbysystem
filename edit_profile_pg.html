@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSSB FOOD ORDERING SYSTEM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Styles */
+       body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+             background-image: url(https://e0.pxfuel.com/wallpapers/391/776/desktop-wallpaper-white-background-white-metallic.jpg);
+        }
+
+        .container {
+            padding-top: 80px; /* To prevent content overlap with the fixed header */
+            padding-bottom: 70px; /* To prevent content overlap with the fixed navbar */
+			boder color: none;
+			
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent; /* Changed to transparent */
+            padding: 10px;
+            color: white;
+            border: none; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+			colour:none;
+        }
+        .profile-container {
+            background-color: #1C1C1C;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 270px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            color: white;
+        }
+
+        .profile-container h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .profile-image-section {
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #fff;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .upload-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #555;
+        }
+
+        .profile-form .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .profile-form label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .profile-form input,
+        .profile-form select {
+            width: 83%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #2C2C2C;
+            color: white;
+            outline: none;
+        }
+
+        .profile-form input::placeholder {
+            color: #999;
+        }
+
+        .save-btn {
+            width: 50%;
+            padding: 10px;
+            background-color: #0055FF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+			align-content: center;
+			align-items: center;
+        }
+
+        .save-btn:hover {
+            background-color: #003bb5;
+        }
+
+        /* Footer and Navigation Icons */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1C36B8;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+
+        .navbar a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar a span {
+            display: block;
+            font-size: 12px;
+        }
+		.profilePicture-container{
+			text-align: center;
+			margin-top: auto;
+			padding-top: 10px;
+			padding: 10px;
+			
+		  justify-content: center;
+		  margin-top: -90px;
+			
+		}
+			/* Sidebar styles */
+		   .sidebar {
+		display: none;
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 180px; /* Reduced width */
+		height: 100%;
+		background-color: #333;
+		color: white;
+		padding: 15px;
+		z-index: 1000;
+		transition: transform 0.3s ease, display 0s 0.3s; /* Add transition for display */
+	}
+
+	.sidebar.visible {
+		display: block;
+		transform: translateX(0);
+		transition: transform 0.3s ease;
+	}
+
+	.sidebar.hidden {
+		transform: translateX(-100%);
+		transition: transform 0.3s ease;
+	}
+
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        
+    </style>
+
+</head>
+<body>
+   
+<div class="header">
+        <img src="pictures/hamburger.png"   height="40" width="50" class="side-bar"><span class="logo1"><img src="pictures/new_logo.png" alt="Our Company" width="201" height="54" align="centre"></span>
+  <div class="logo"></div>
+        <div class="notification">
+           
+        </div>
+</div>
+    
+<div class="container">
+  <div class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="#">Send Feedback</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+
+  
+       <div class="profilePicture-container">
+            <h2>Update Your Profile</h2>
+            <div class="profile-image-section">
+                <div class="profile-image">
+                    <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                </div>
+                <button class="upload-btn">Upload Image</button>
+            </div>
+		   </div>
+    	<div class="profile-container">
+            <form class="profile-form">
+                <div class="input-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" placeholder="[first_Name]" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" placeholder="[last_Name]" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" id="phone_number" placeholder="[phone_number]" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="employee_id">Employee ID</label>
+                    <input type="text" id="employee_id" placeholder="[employee_ID]" required>
+                </div>
+
+              <div class="input-group">
+                <label for="department">Department</label>
+                  <select id="department" required>
+					  <option value="hr">Option</option>
+                      <option value="hr">HR</option>
+                      <option value="it">IT</option>
+                      <option value="sales">Sales</option>
+                      <option value="marketing">Marketing</option>
+					  <option value="hr">Engineers</option>
+                  </select>
+                </div>
+                <button type="submit" class="save-btn">Save</button>
+            </form>
+        </div>
+
+       
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" id="homeLink">
+        <img src="pictures/home_logo.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="#" id="profileLink">
+        <img src="pictures/profile_icon.png" alt="Profile">
+        <span>Profile</span>
+    </a>
+    <a href="#" id="orderLink">
+        <img src="pictures/order_icon_1.png" alt="Order">
+        <span>Order</span>
+    </a>
+</div>
+    </div>
+	 
+<script>
+        
+		   // Toggle sidebar visibility
+	document.querySelector('.side-bar').addEventListener('click', function() {
+		const sidebar = document.getElementById('sidebar');
+		if (sidebar.classList.contains('hidden')) {
+			sidebar.classList.remove('hidden');
+			sidebar.classList.add('visible');
+		} else {
+			sidebar.classList.remove('visible');
+			sidebar.classList.add('hidden');
+		}
+	});
+
+	// Swipe to close sidebar
+	let touchstartX = 0;
+	let touchendX = 0;
+
+	function checkSwipe() {
+		if (touchendX < touchstartX) { // Swipe left
+			const sidebar = document.getElementById('sidebar');
+			if (sidebar.classList.contains('visible')) {
+				sidebar.classList.remove('visible');
+				sidebar.classList.add('hidden');
+			}
+		}
+	}
+
+	document.body.addEventListener('touchstart', function(e) {
+		touchstartX = e.changedTouches[0].screenX;
+	});
+
+	document.body.addEventListener('touchend', function(e) {
+		touchendX = e.changedTouches[0].screenX;
+		checkSwipe();
+	});
+
+    // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "home.html"; // Navigate to Home Page
+    });
+
+    document.getElementById('profileLink').addEventListener('click', function() {
+        window.location.href = "profile_pg.html"; // Navigate to Profile Page
+    });
+
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "order_pg.html"; // Navigate to Order Page
+    });
+    </script>
+	<script>
+	
+    // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "home.html"; // Navigate to Home Page
+    });
+
+    document.getElementById('profileLink').addEventListener('click', function() {
+        window.location.href = "profile_pg.html"; // Navigate to Profile Page
+    });
+
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "order_pg.html"; // Navigate to Order Page
+    });
+</script>
+</body>
+</html>

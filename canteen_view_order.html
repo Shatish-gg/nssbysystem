@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view order-canteen</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+             background-image: url(https://e0.pxfuel.com/wallpapers/391/776/desktop-wallpaper-white-background-white-metallic.jpg);
+        }
+
+        .container {
+            padding-top: 80px; /* Prevent overlap with the fixed header */
+            padding-bottom: 80px; /* Prevent overlap with the fixed navbar */
+        }
+
+        /* Header styles */
+        .header {
+           display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent; /* Changed to transparent */
+            padding: 10px;
+            color: white;
+            border: none; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+			colour:none;
+        }
+
+        .header .profile-pic {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .header .logo1 {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header .logo img {
+            height: 40px;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1C36B8; /* Changed to a neutral color */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+
+        .navbar a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar a span {
+            display: block;
+            font-size: 12px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar.visible {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        /* Order table styling */
+        .order-table {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        .order-table th,
+        .order-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .order-table th {
+            background-color: #1C36B8;
+            color: white;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .order-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .order-table tr:hover {
+            background-color: #ddd;
+        }
+
+        .order-table td {
+            vertical-align: middle;
+        }
+
+        /* Button Styling */
+        .action-btn, .send-info button {
+            background-color: #1C36B8;
+            color: white;
+            border: none;
+            padding: 12px 19px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .action-btn:hover, .send-info button:hover {
+            background-color: #003bb5;
+			
+        }
+
+        /* Send Info Box */
+        .send-info {
+            width: 80%;
+            max-width: 275px;
+            margin: 40px auto;
+            background-color: #1C1C1C;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .send-info textarea {
+            width: 80%;
+            height: 120px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #2C2C2C;
+            color: white;
+            resize: none;
+        }
+
+        .send-info h3 {
+            margin-top: 0;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 400px) {
+            .order-table, .send-info {
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="pictures/hamburger.png" alt="Profile Picture" class="profile-pic">
+        <span class="logo1"><img src="pictures/new_logo.png" alt="Company Logo" width="200" height="47"></span>
+    </div>
+
+    <div>
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="#">Send Feedback</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Order Table -->
+        <table class="order-table" id="orderTable">
+            <thead>
+                <tr>
+                    <th>NO.</th> <!-- Added column for numbering -->
+                    <th>Employee Name</th>
+                    <th>Employee ID</th>
+                    <th>Department</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Order data will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <!-- Send Information Section -->
+        <div class="send-info">
+            <h3>Send Information to Admin</h3>
+           <textarea id="infoTextarea" placeholder="Enter additional comments or instructions here..."></textarea>
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" id="homeLink">
+        <img src="pictures/home_logo.png" alt="Home">
+        <span>Home</span>
+    </a>
+
+    <a href="#" id="orderLink">
+        <img src="pictures/order_icon_1.png" alt="Order">
+        <span>View Orders</span>
+    </a>
+</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore, collection, query, where, onSnapshot, Timestamp ,setDoc,doc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+		
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCno2NNkzt3gLdC4CfZ4TlhwESQJgI_IXk",
+            authDomain: "test-login2-e4c7f.firebaseapp.com",
+            projectId: "test-login2-e4c7f",
+            storageBucket: "test-login2-e4c7f.appspot.com",
+            messagingSenderId: "698181575885",
+            appId: "1:698181575885:web:4e9110486e5c6fd5eab584"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Get today's date as a range (start of today to start of tomorrow)
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);  // Set to start of the day
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);  // Set to start of the next day
+
+        // Function to get orders for the current date
+        async function getOrdersForToday() {
+            const ordersRef = collection(db, 'orders');
+            
+            // Query where 'orderDate' is between start of today and start of tomorrow
+            const q = query(ordersRef, where("orderDate", ">=", Timestamp.fromDate(today)), where("orderDate", "<", Timestamp.fromDate(tomorrow)));
+            
+            onSnapshot(q, (snapshot) => {
+                const tableBody = document.querySelector("#orderTable tbody");
+                tableBody.innerHTML = ""; // Clear table before adding updated data
+                
+                let rowNumber = 1; // Initialize row numbering
+                snapshot.forEach((doc) => {
+                    const orderData = doc.data();
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>${rowNumber}</td> <!-- Row Number -->
+                        <td>${orderData.name}</td>
+                        <td>${orderData.employeeId}</td>
+                        <td>${orderData.department}</td>
+                        <td>${orderData.orderStatus}</td>
+               
+                    `;
+                    tableBody.appendChild(row);
+                    rowNumber++; // Increment row number for the next order
+                });
+            });
+        }
+ 
+		
+        // Call the function to get today's orders
+        getOrdersForToday();
+		// ... your existing Firebase initialization and functions
+
+    // Event listener for the Send button
+    document.getElementById('sendButton').addEventListener('click', async () => {
+        try {
+            const table = document.getElementById('orderTable');
+            const tbody = table.getElementsByTagName('tbody')[0];
+            const rows = tbody.getElementsByTagName('tr');
+
+            const tableData = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const rowData = {
+                    number: cells[0].innerText,
+                    name: cells[1].innerText,
+                    employeeId: cells[2].innerText,
+                    department: cells[3].innerText,
+                    orderStatus: cells[4].innerText
+                };
+                tableData.push(rowData);
+            }
+
+            const infoTextarea = document.getElementById('infoTextarea');
+            const additionalInfo = infoTextarea.value;
+
+            // Automatically generate document ID in 'admin-data' collection
+            await setDoc(doc(collection(db, 'admin-data')), {
+                tableData: tableData,
+                additionalInfo: additionalInfo,
+                timestamp: new Date()
+            });
+
+            alert('Data sent successfully!');
+        } catch (error) {
+            console.error('Error sending data:', error);
+            alert('Failed to send data.');
+        }
+    });
+</script>
+	<script>
+
+    // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "canteen_home.html"; // Navigate to Home Page
+    });
+
+ 
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "canteen_view_order.html"; // Navigate to Order Page
+    });
+	
+	</script>
+
+
+</body>
+</html>

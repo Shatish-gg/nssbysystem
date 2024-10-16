@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign_In</title>
+    <style>
+        /* Your existing styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: url(https://e0.pxfuel.com/wallpapers/391/776/desktop-wallpaper-white-background-white-metallic.jpg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            padding-top: 0px; /* Padding to account for fixed header */
+            padding-bottom: 60px; /* Padding to account for fixed footer */
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0C0E8B;
+            color: #fff;
+            margin-top: 20px;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 10px;
+        }
+
+        form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1C36B8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #143b7b;
+        }
+
+        h2 {
+            text-align: center;
+            text-decoration-style: solid;
+            font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+            font-size: 40px;
+            align-content: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #5356E4;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: #ddd;
+        }
+
+        .input-group .icon-right {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            color: #ddd;
+        }
+
+        button[type="submit"] {
+            background-color: #0C0E8B;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #585858;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .remember input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .forgot-password {
+            text-align: right;
+        }
+
+        .forgot-password a {
+            color: #5356E4;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .signup {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .signup a {
+            color: #5356E4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
+
+        .notification {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s, top 0.5s;
+        }
+
+        .notification.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .notification.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCno2NNkzt3gLdC4CfZ4TlhwESQJgI_IXk",
+            authDomain: "test-login2-e4c7f.firebaseapp.com",
+            databaseURL: "https://test-login2-e4c7f-default-rtdb.firebaseio.com",
+            projectId: "test-login2-e4c7f",
+            storageBucket: "test-login2-e4c7f.appspot.com",
+            messagingSenderId: "698181575885",
+            appId: "1:698181575885:web:4e9110486e5c6fd5eab584"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+        const firestore = getFirestore(app);
+
+        // Add event listener to the form submission
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();  // Prevent form from refreshing the page
+
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var username = document.getElementById('username').value;
+            var phone = document.getElementById('phone').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Save user data to the Firebase Realtime Database
+                await set(ref(database, 'users/' + user.uid), {
+                    username: username,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    role: "user" // Assign a default role such as 'user'
+                });
+
+                // Save user data to Firestore
+                await setDoc(doc(firestore, 'users', user.uid), {
+                    username: username,
+                    email: email,
+                    phone: phone,
+                    role: "user" // Assign a default role such as 'user'
+                });
+
+                alert('User created successfully!');
+                window.location.href = "login.html";
+            } catch (error) {
+                const errorMessage = error.message;
+                alert(errorMessage); // Show error message to user
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div style="text-align:center;"><img src="pictures/nssb_logo_text1.png" alt="Home" width="324" height="87"></div>
+            <h2>SIGN IN&nbsp;</h2>
+            <h3 style="font-size:20px;">Create your account to sign in</h3>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="input-group">
+                    <button type="submit">Sign Up</button>
+                </div>
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Developed By Gunasegarran. All Rights Reserved.</p>
+    </div>
+</body>
+</html>

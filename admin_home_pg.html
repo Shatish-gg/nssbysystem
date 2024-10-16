@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSSB FOOD ORDERING SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+           
+        }
+
+        .container {
+            padding-top: 80px; /* To prevent content overlap with the fixed header */
+            padding-bottom: 70px; /* To prevent content overlap with the fixed navbar */
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent; /* Changed to transparent */
+            padding: 10px;
+            color: white;
+           border: none; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .logo {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .notification {
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0C0E8B; /* Changed to a neutral color */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+
+        .navbar a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar a span {
+            display: block;
+            font-size: 12px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 180px; /* Reduced width */
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.visible {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Slider container */
+        .slider-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+			margin-top: 0px;
+        }
+
+        /* Slides */
+        .slide {
+            display: none;
+            width: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Controls */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box img {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .tasks-section {
+            margin: 20px 0;
+        }
+
+        .tasks-section h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .tasks-section h5 {
+            text-align: center;
+            color: #666;
+            font-weight: normal;
+        }
+
+    .logo1 {            flex-grow: 1;
+            text-align: center;
+		
+} 
+		.h5{
+			align-items: center;
+			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+			font-size: 20px;
+			color: #000000}
+    </style>
+</head>
+<body>
+<div class="header">
+        <img src="pictures/hamburger.png" alt="Profile Picture" class="profile-pic"  height="20" width="20"><span class="logo1"><img src="pictures/new_logo.png" alt="Our Company" width="200" height="47" align="centre"></span>
+        <div class="logo"></div>
+        <div class="notification">
+            <div class="notification-icon">&nbsp;</div>
+            <div class="dropdown">
+                <p>No new notifications</p>
+            </div>
+        </div>
+    </div>
+        
+<div class="container">
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#">Send Feedback</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+        <!-- Image Slider -->
+        <div class="slider-container">
+          <div class="slide">
+              <img src="pictures/IMAGE1.jpeg" alt="Slide 1">
+            </div>
+             
+            <div class="slide">
+              <img src="pictures/image2.JPG" alt="Slide 2">
+            </div>
+			
+			<div class="slide">
+              <img src="pictures/image4.JPG" alt="Slide 3">
+            </div>
+            <!-- Navigation controls -->
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2>Welcome, <span id="username">Shara</span>!</h2>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-box">
+                <h4>View Orders</h4>
+                <img src="pictures/order_Food_icon.png" alt="Order Food">
+            </div>
+            <div class="stat-box">
+                <h4>View Profile</h4>
+                <img src="pictures/user_icon1.png" alt="Profile View">
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="tasks-section">
+          <img src="pictures/logo.jpg" alt="Our Company" width="319" height="48" align="middle">
+          <h5>NSSB is creating, building, and shaping humans and processes for human comfort through Automated Industry.</h5>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+<div class="navbar">
+        <a href="#">
+        <img src="pictures/home_logo.png" alt="Home">
+            <span>Home</span>
+        </a>
+ 
+        <a href="#">
+        <img src="pictures/order_icon_1.png" alt="Order">
+            <span>View Orders</span>
+        </a>
+    </div>
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" id="homeLink">
+        <img src="pictures/home_logo.png" alt="Home">
+        <span>Home</span>
+    </a>
+   
+    <a href="#" id="orderLink">
+        <img src="pictures/order_icon_1.png" alt="Order">
+        <span>View Order</span>
+    </a>
+	</div>
+  
+<script>
+        // Placeholder for dynamically setting the username
+        document.getElementById('username').textContent = 'Shara';
+
+        // Image Slider Script
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+
+        // Toggle sidebar visibility
+        document.querySelector('.profile-pic').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('visible');
+            } else {
+                sidebar.classList.remove('visible');
+                sidebar.classList.add('hidden');
+            }
+        });
+
+        // Swipe to close sidebar
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        function checkSwipe() {
+            if (touchendX < touchstartX) { // Swipe left
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('visible')) {
+                    sidebar.classList.remove('visible');
+                    sidebar.classList.add('hidden');
+                }
+            }
+        }
+
+        document.body.addEventListener('touchstart', function(e) {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.body.addEventListener('touchend', function(e) {
+            touchendX = e.changedTouches[0].screenX;
+            checkSwipe();
+        });
+	
+	
+	  // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "admin_home_pg.html"; // Navigate to Home Page
+    });
+
+   
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "order_confirm_pg.html"; // Navigate to Order Page
+    });
+
+	
+    </script>
+	
+</body>
+</html>

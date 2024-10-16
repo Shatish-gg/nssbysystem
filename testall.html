@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spalash image for nssb food ordering app</title>
+   <style>
+	   /* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Background */
+body, html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+   background-image: url(https://i.pinimg.com/736x/ae/79/7d/ae797d8d5f2dced63940983549b07779.jpg);
+}
+
+.background-image {
+    background: url('assets/images/apps2.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Styles */
+.logo-container {
+    margin-top: 50px;
+}
+
+.logo {
+    width: auto;
+    height: 65px;
+}
+
+/* Welcome Text Styles */
+.welcome-text {
+    text-align: center;
+    color: black;
+    font-family: 'Faster One', sans-serif;
+    font-size: 53px;
+    letter-spacing: 1px;
+    animation: slideInBounce 0.6s ease-out;
+}
+
+/* Quote Section Styles */
+.quote-text {
+    text-align: center;
+    padding: 0 25px;
+    color: black;
+    font-family: 'Nosifer', cursive;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 50px;
+    animation: rotateIn 0.6s ease-in-out;
+}
+
+/* Animations */
+@keyframes slideInBounce {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(10px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotateIn {
+    0% {
+        transform: rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+	</style>
+</head>
+<body>
+    <!-- Background Image -->
+<div class="background-image">
+        <!-- Logo Section -->
+  <div class="logo-container">
+    <p><img src="pictures/new_logo.png" alt="NSSB Logo" class="logo">
+    </p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  </div>
+
+        <!-- Welcome Text --><!-- Quote Section -->
+        <div class="quote-text">
+          <p>"NSSB is creating, building and shaping humans and processes for human comfort through Automated Industry."</p>
+  </div>
+</div>
+</body>
+</html>

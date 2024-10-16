@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSSB FOOD ORDERING SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+             background-image: url(https://e0.pxfuel.com/wallpapers/391/776/desktop-wallpaper-white-background-white-metallic.jpg);
+        }
+
+        .container {
+            padding-top: 80px; /* To prevent content overlap with the fixed header */
+            padding-bottom: 70px; /* To prevent content overlap with the fixed navbar */
+			boder color: none;
+			
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent; /* Changed to transparent */
+            padding: 10px;
+            color: white;
+            border: none; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+			colour:none;
+        }
+
+       .profile-pic {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .logo {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .notification {
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0C0E8B; 
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            flex-grow: 1;
+        }
+
+        .navbar a img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar a span {
+            display: block;
+            font-size: 12px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+              position: fixed;
+    left: -180px; 
+    top: 0;
+    width: 180px;
+    height: 100%;
+    background-color: #333; 
+    color: white;
+    padding: 15px;
+    z-index: 1000;
+    transition: transform 0.5s ease, background-color 0.3s ease; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
+        }
+
+        .sidebar.visible {
+          transform: translateX(180px); 
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-180px); 
+        }
+
+        .sidebar ul {
+           list-style-type: none;
+    padding: 0;
+    margin: 0;
+        }
+
+        .sidebar ul li {
+              margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+             color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+        }
+		
+		.sidebar-logo {
+    width: 180px; 
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px; 
+} 
+}
+
+        /* Slider container */
+        .slider-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        /* Slides */
+        .slide {
+            display: none;
+            width: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Controls */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box img {
+            width: 100px;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .tasks-section {
+            margin: 20px 0;
+        }
+
+        .tasks-section h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .tasks-section h5 {
+            text-align: center;
+            color: #666;
+            font-weight: normal;
+        }
+
+    .logo1 {            flex-grow: 1;
+            text-align: center;
+		
+} 
+		.h5{
+			align-items: center;
+			font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+			font-size: 20px;
+		}
+		 /* Calendar and Order Styles */
+        .content {
+            text-align: center;
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+        
+        }
+
+        .calendar-container {
+            margin-bottom: 30px;
+        }
+
+        #calendar {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .order-section {
+            margin: 20px 0;
+        }
+
+        .order-question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .order-buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order-buttons .yes-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .order-buttons .no-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            margin-top: 20px;
+        }
+
+      
+		 .employee-id-input {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 80%;
+        }
+		/* Hidden by default */
+         #submitOrder {
+           display: none;
+	       background-color: #5BA7E1;
+           color: white;
+	        padding: 10px 40px;
+            margin: 20 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+			margin-top: 20px;			
+	
+}
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="pictures/hamburger.png" alt="Profile Picture" class="profile-pic"  height="20" width="20">
+    <span class="logo1"><img src="pictures/new_logo.png" alt="Our Company" width="200" height="47" align="centre"></span>
+    <div class="logo"></div>
+    <div class="notification">
+        <div class="notification-icon">&nbsp;</div>
+        <div class="dropdown">
+            <p>No new notifications</p>
+        </div>
+    </div>
+</div>
+    
+<div class="container">
+    <div class="sidebar" id="sidebar">
+		 <img src="pictures\logo.jpg" alt="Company Logo" class="sidebar-logo">
+        <ul>
+            <li><a href="#">Send Feedback</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </div>
+
+            <!-- Content Section -->
+    <div class="content">
+        <!-- Calendar Section -->
+        <div class="calendar-container">
+            <h2>Today's Date</h2>
+            <div id="calendar"></div>
+        </div>
+
+        <!-- Order Section -->
+        <div class="order-section">
+            <p class="order-question">Do you want to order food today?</p>
+            	<div class="order-buttons">
+                <button class="yes-btn" onclick="showSubmitButton(),checkTime()">Yes</button>
+                <button class="no-btn" onclick="hideSubmitButton(),backHome()">No</button>
+            </div>
+				<button id="submitOrder">Submit Order</button>
+			<p id="time-message" style="color: red;"></p>
+      			
+          
+        </div>
+    </div>
+</div>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" id="homeLink">
+        <img src="pictures/home_logo.png" alt="Home">
+        <span>Home</span>
+    </a>
+    <a href="#" id="profileLink">
+        <img src="pictures/profile_icon.png" alt="Profile">
+        <span>Profile</span>
+    </a>
+    <a href="#" id="orderLink">
+        <img src="pictures/order_icon_1.png" alt="Order">
+        <span>Order</span>
+    </a>
+</div>
+	<script>
+		 // Display today's date in the calendar section
+        const calendarElement = document.getElementById('calendar');
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        calendarElement.textContent = today.toLocaleDateString('en-US', options);
+
+		function checkTime() {
+    const currentHour = new Date().getHours();
+    const message = document.getElementById('time-message');
+    if (currentHour >= 8 && currentHour <= 10) {
+        message.textContent = "You can place an order.";
+    } else {
+        message.textContent = "Order is closed. Please come back during lunch hours (10 Am - 8 Am).";
+        hideSubmitButton();
+    }
+}
+
+    // Show submit button when 'Yes' is clicked
+    function showSubmitButton() {
+        document.getElementById('submitOrder').style.display = 'inline-block';
+    }
+
+    // Hide submit button when 'No' is clicked
+    function hideSubmitButton() {
+        document.getElementById('submitOrder').style.display = 'none';
+		  
+    }
+	function backHome(){
+		window.location.href="home.html";
+}
+   
+	
+</script>
+
+  
+<script>
+	
+      
+         // Toggle sidebar visibility
+        document.querySelector('.profile-pic').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('visible');
+            } else {
+                sidebar.classList.remove('visible');
+                sidebar.classList.add('hidden');
+            }
+        });
+
+        // Swipe to close sidebar
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        function checkSwipe() {
+            if (touchendX < touchstartX) { // Swipe left
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar.classList.contains('visible')) {
+                    sidebar.classList.remove('visible');
+                    sidebar.classList.add('hidden');
+                }
+            }
+        }
+
+        document.body.addEventListener('touchstart', function(e) {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.body.addEventListener('touchend', function(e) {
+            touchendX = e.changedTouches[0].screenX;
+            checkSwipe();
+        });
+
+    // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "home.html"; // Navigate to Home Page
+    });
+
+    document.getElementById('profileLink').addEventListener('click', function() {
+        window.location.href = "profile_pg.html"; // Navigate to Profile Page
+    });
+
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "order_pg.html"; // Navigate to Order Page
+    });
+	
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCno2NNkzt3gLdC4CfZ4TlhwESQJgI_IXk",
+        authDomain: "test-login2-e4c7f.firebaseapp.com",
+        databaseURL: "https://test-login2-e4c7f-default-rtdb.firebaseio.com",
+        projectId: "test-login2-e4c7f",
+        storageBucket: "test-login2-e4c7f.appspot.com",
+        messagingSenderId: "698181575885",
+        appId: "1:698181575885:web:4e9110486e5c6fd5eab584"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Function to get user info from Firestore (but not display it)
+    async function getUserInfo(userID) {
+        const userDoc = await getDoc(doc(db, "users", userID));
+        if (userDoc.exists()) {
+            return userDoc.data(); // Return user data
+        } else {
+            console.error("User data not found");
+            return null;
+        }
+    }
+
+    // Function to submit order with user data and order info
+    async function submitOrder(userID) {
+        try {
+            // Get user data
+            const userInfo = await getUserInfo(userID);
+            if (!userInfo) return; // Exit if no user data is found
+
+            // Additional order details (you can modify these fields)
+            const orderDetails = {
+                orderStatus: "ordered", // Example of additional info
+                orderDate: new Date(),      // Order date   
+				userId: user.uid, // Save user ID
+                name: name,
+                email: email,
+                department: department,
+                employeeId: employeeId,  // Spread user details (name, email, etc.)
+            };
+
+            // Add new order to 'orders' collection
+            await addDoc(collection(db, "orders"), orderDetails);
+
+            console.log("Order successfully placed:", orderDetails);
+        } catch (error) {
+            console.error("Error placing order:", error);
+        }
+    }
+
+    // Submit button event listener
+    document.getElementById("submitOrder").addEventListener("click", () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Call function to submit order using the logged-in user's UID
+                submitOrder(user.uid);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+    });
+</script>
+
+<!-- HTML for Submit Button -->
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCno2NNkzt3gLdC4CfZ4TlhwESQJgI_IXk",
+        authDomain: "test-login2-e4c7f.firebaseapp.com",
+        databaseURL: "https://test-login2-e4c7f-default-rtdb.firebaseio.com",
+        projectId: "test-login2-e4c7f",
+        storageBucket: "test-login2-e4c7f.appspot.com",
+        messagingSenderId: "698181575885",
+        appId: "1:698181575885:web:4e9110486e5c6fd5eab584"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Function to get user info from Firestore (but not display it)
+    async function getUserInfo(userID) {
+        const userDoc = await getDoc(doc(db, "users", userID));
+        if (userDoc.exists()) {
+            return userDoc.data(); // Return user data
+        } else {
+            console.error("User data not found");
+            return null;
+        }
+    }
+
+    // Function to submit order with user data and order info
+    async function submitOrder(userID) {
+        try {
+            // Get user data
+            const userInfo = await getUserInfo(userID);
+            if (!userInfo) return; // Exit if no user data is found
+
+            // Additional order details (you can modify these fields)
+            const orderDetails = {
+                orderStatus: "ordered", // Example of additional info
+                orderDate: new Date(),      // Order date
+              
+                ...userInfo                 // Spread user details (name, email, etc.)
+            };
+
+            // Add new order to 'orders' collection
+            await addDoc(collection(db, "orders"), orderDetails);
+
+            console.log("Order successfully placed:", orderDetails);
+        } catch (error) {
+            console.error("Error placing order:", error);
+        }
+    }
+
+    // Submit button event listener
+    document.getElementById("submitOrder").addEventListener("click", () => {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Call function to submit order using the logged-in user's UID
+                submitOrder(user.uid);
+				 alert('Order successfully placed');
+		
+            } else {
+                console.error("User not logged in");
+            }
+        });
+    });
+
+
+    </script>
+	
+	<script>
+	
+    // Navigation Links
+    document.getElementById('homeLink').addEventListener('click', function() {
+        window.location.href = "home.html"; // Navigate to Home Page
+    });
+
+    document.getElementById('profileLink').addEventListener('click', function() {
+        window.location.href = "profile_pg.html"; // Navigate to Profile Page
+    });
+
+    document.getElementById('orderLink').addEventListener('click', function() {
+        window.location.href = "order_pg.html"; // Navigate to Order Page
+    });
+	</script>
+</body>
+</html>
